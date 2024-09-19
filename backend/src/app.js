@@ -1,17 +1,14 @@
 // src/app.js
 import express from 'express';
-import mongoose from 'mongoose';
-import authRoutes from './routes/auth.js'; // Chemin vers vos routes d'authentification
-import authMiddleware from './middleware/auth.js'; // Chemin vers votre middleware
+import { setMongoConnection } from './config.mongo.js'; // Corrigez le chemin si nécessaire
+import authRoutes from './routes/auth.js'; // Corrigez le chemin si nécessaire
+import authMiddleware from './middleware/auth.js'; // Corrigez le chemin si nécessaire
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-const MONGO_URI = 'mongodb://localhost:27017/yourDatabaseName'; // Remplacez par votre URI MongoDB
+const PORT = process.env.PORT || 3000;
 
 // Connexion à MongoDB
-mongoose.connect(MONGO_URI)
-  .then(() => console.log('Connecté à MongoDB'))
-  .catch(err => console.error('Erreur de connexion à MongoDB:', err));
+setMongoConnection();
 
 // Middleware
 app.use(express.json()); // Pour parser les JSON requests
