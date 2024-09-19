@@ -1,7 +1,7 @@
-// middleware/auth.js
+// src/middleware/auth.js
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = 'votre_secret_jwt'; // Remplacez par une valeur sécurisée
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -11,7 +11,7 @@ const authMiddleware = (req, res, next) => {
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) return res.status(403).json({ error: 'Token invalide' });
-    
+
     req.user = user;
     next();
   });

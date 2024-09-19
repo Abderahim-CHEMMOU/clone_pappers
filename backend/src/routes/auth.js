@@ -1,12 +1,11 @@
-// routes/auth.js
+// src/routes/auth.js
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 const router = express.Router();
-const JWT_SECRET = 'votre_secret_jwt'; // Remplacez par une valeur sécurisée
+const JWT_SECRET = process.env.JWT_SECRET;
 
-// Inscription
 router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -15,11 +14,11 @@ router.post('/register', async (req, res) => {
     await user.save();
     res.status(201).json({ message: 'Utilisateur créé avec succès' });
   } catch (error) {
+    console.error('Erreur lors de la création de l\'utilisateur:', error);
     res.status(400).json({ error: 'Erreur lors de la création de l\'utilisateur' });
   }
 });
 
-// Connexion
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -34,11 +33,11 @@ router.post('/login', async (req, res) => {
 
     res.json({ authToken, refreshToken });
   } catch (error) {
+    console.error('Erreur lors de la connexion:', error);
     res.status(500).json({ error: 'Erreur lors de la connexion' });
   }
 });
 
-// Rafraîchir le token
 router.post('/refresh', (req, res) => {
   const { refreshToken } = req.body;
 
