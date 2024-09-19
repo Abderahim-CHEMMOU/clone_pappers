@@ -1,37 +1,30 @@
+// src/app.js
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import cors from 'cors';
-
-// Charger les variables d'environnement
-dotenv.config();
-
-// Importation des routes
-// import authRoutes from './routes/authRoutes.js';
-// import companyRoutes from './routes/companyRoutes.js';
+import authRoutes from './routes/auth.js'; // Chemin vers vos routes d'authentification
+import authMiddleware from './middleware/auth.js'; // Chemin vers votre middleware
 
 const app = express();
-
-// Middleware pour parser le JSON
-app.use(express.json());
-
-// Middleware pour autoriser les requêtes provenant d'autres domaines (CORS)
-app.use(cors());
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = 'mongodb://localhost:27017/yourDatabaseName'; // Remplacez par votre URI MongoDB
 
 // Connexion à MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+mongoose.connect(MONGO_URI)
+  .then(() => console.log('Connecté à MongoDB'))
+  .catch(err => console.error('Erreur de connexion à MongoDB:', err));
 
-// Utiliser les routes définies dans le dossier routes
-// app.use('/api/auth', authRoutes);       // Pour les routes d'authentification
-// app.use('/api/companies', companyRoutes);  // Pour les routes de gestion des entreprises
+// Middleware
+app.use(express.json()); // Pour parser les JSON requests
 
-// Démarrer le serveur
-const PORT = process.env.PORT || 3000;
+// Routes
+app.use('/api', authRoutes); // Utilisation des routes d'authentification
+
+// Route protégée pour tester le middleware
+app.get('/api/profile', authMiddleware, (req, res) => {
+  res.json({ message: 'Vous êtes authentifié !', user: req.user });
+});
+
+// Démarrage du serveur
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Serveur démarré sur le port ${PORT}`);
 });
