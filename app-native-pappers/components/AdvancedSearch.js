@@ -171,4 +171,28 @@ item: {
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
-    shadowColor: '#00
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    marginVertical: 15,
+    width: '100%',
+  },
+  detailsTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+  },
+  detailsText: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 5,
+  },
+  resultsList: {
+    width: '100%',
+    paddingHorizontal: 70,
+  },
+});
+
+export default AdvancedSearch;
