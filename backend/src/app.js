@@ -1,10 +1,19 @@
 
+// src/app.js
+import express from 'express';
+import { setMongoConnection } from '../config/config.mongo.js';
+import authRoutes from './routes/auth.js';
+import profileRoutes from './routes/profile.js';
+import authMiddleware from './middleware/auth.js';
+=======
+
 
 const express = require('express');
 const multer = require('multer'); // Pour gérer l'upload de fichiers
 const csv = require('csv-parser'); // Pour parser les fichiers CSV
 const fs = require('fs'); // Pour manipuler le système de fichiers
 const cors = require('cors'); // Pour gérer les requêtes cross-origin
+
 
 const app = express();
 app.use(cors()); // Activer CORS pour autoriser les requêtes depuis le frontend
@@ -31,8 +40,14 @@ app.post('/upload-csv', upload.single('file'), (req, res) => {
     return res.status(400).send('Aucun fichier n’a été téléversé.');
   }
 
+
+// Routes
+app.use('/api', authRoutes); // Utilisation des routes d'authentification
+app.use('/api', profileRoutes); // Utilisation des routes de gestion de profil
+=======
   console.log(`Fichier reçu : ${req.file.originalname}`);
   console.log(`Chemin du fichier stocké : ${req.file.path}`);
+
 
   res.json({
     message: 'Fichier téléversé et stocké avec succès.',
