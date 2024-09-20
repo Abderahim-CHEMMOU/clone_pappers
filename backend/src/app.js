@@ -1,12 +1,21 @@
-
-
-const express = require('express');
-const multer = require('multer'); // Pour gérer l'upload de fichiers
-const csv = require('csv-parser'); // Pour parser les fichiers CSV
-const fs = require('fs'); // Pour manipuler le système de fichiers
-const cors = require('cors'); // Pour gérer les requêtes cross-origin
-
+import cors from 'cors'; // Pour gérer les requêtes cross-origin
+import express from 'express';
+import mongoose from 'mongoose';
+import multer from 'multer'; // Pour gérer l'upload de fichiers
+import authMiddleware from './middleware/auth.js'; // Chemin correct vers auth.js
+import authRoutes from './routes/auth.js'; // Chemin correct vers auth.js
 const app = express();
+const PORT = process.env.PORT || 3003;
+
+mongoose.connect('mongodb://localhost:27017/mydatabase', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => console.log('Connexion à MongoDB réussie'))
+  .catch(err => console.error('Erreur de connexion à MongoDB:', err));
+
+// Middleware
+app.use(express.json()); // Pour parser les JSON requests
 app.use(cors()); // Activer CORS pour autoriser les requêtes depuis le frontend
 
 // Configuration de multer pour stocker les fichiers CSV dans le dossier 'uploads'
@@ -15,12 +24,13 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/'); // Stocke le fichier dans le dossier 'uploads'
   },
   filename: (req, file, cb) => {
-    // Ajouter un timestamp pour éviter les conflits de nom
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + '-' + file.originalname);
+    cb(null, uniqueSuffix + '-' + file.originalname); // Ajout d'un timestamp pour éviter les conflits de nom
   }
 });
 const upload = multer({ storage: storage });
+
+app.use('/api', authRoutes);
 
 // Endpoint pour téléverser le fichier CSV
 app.post('/upload-csv', upload.single('file'), (req, res) => {
@@ -36,11 +46,16 @@ app.post('/upload-csv', upload.single('file'), (req, res) => {
 
   res.json({
     message: 'Fichier téléversé et stocké avec succès.',
-    filePath: req.file.path // Renvoyer le chemin du fichier stocké
+    filePath: req.file.path
   });
 });
 
-// Démarrer le serveur sur le port 3000
-app.listen(3000, () => {
-  console.log('Serveur démarré sur le port 3000');
+// Route protégée pour tester le middleware
+app.get('/api/profile', authMiddleware, (req, res) => {
+  res.json({ message: 'Vous êtes authentifié !', user: req.user });
+});
+
+// Démarrage du serveur
+app.listen(PORT, () => {
+  console.log(`Serveur démarré sur le port ${PORT}`);
 });
