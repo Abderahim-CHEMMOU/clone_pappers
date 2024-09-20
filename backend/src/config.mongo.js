@@ -1,8 +1,5 @@
-// src/config/config.mongo.js
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 
-dotenv.config();
+import mongoose from 'mongoose';
 
 export const setMongoConnection = async () => {
   try {

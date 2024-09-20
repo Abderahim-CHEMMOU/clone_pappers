@@ -27,6 +27,7 @@ mongoose.connect('mongodb://localhost:27017/companyDB', {
 const importEnterprise = (filePath, batchSize = 1000) => {
   const results = [];
 
+
   fs.createReadStream(filePath)
     .pipe(csv())
     .on('data', (data) => {
@@ -78,3 +79,4 @@ const insertBatch = async (batch) => {
 
 // Importation du fichier entreprise.csv
 importEnterprise('/home/chemmou/Documents/IPSSI/react_native/clone_pappers/backend/KboOpenData_0127_2024_09_Full/enterprise.csv');  
+
