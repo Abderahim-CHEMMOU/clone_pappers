@@ -1,0 +1,68 @@
+{
+    "entreprises": [
+      {
+        "numero_entreprise": "123456789",
+        "nom_entreprise": "Pappers Inc.",
+        "activite": {
+          "group": "Services",
+          "naceCode": "1234"
+        },
+        "adresse": {
+          "rue": "1 rue de l'Innovation",
+          "ville": "Paris",
+          "code_postal": "75001"
+        }
+      },
+      {
+        "numero_entreprise": "987654321",
+        "nom_entreprise": "Tech Solutions bvhfvhg",
+        "activite": {
+          "group": "Technologie",
+          "naceCode": "5678"
+        },
+        "adresse": {
+          "rue": "10 avenue de la Technologie",
+          "ville": "Lyon",
+          "code_postal": "69001"
+        }
+      },
+      {
+        "numero_entreprise": "987654321",
+        "nom_entreprise": "Tech Solutions bvhfvhg",
+        "activite": {
+          "group": "Technologie",
+          "naceCode": "5678"
+        },
+        "adresse": {
+          "rue": "10 avenue de la Technologie",
+          "ville": "Lyon",
+          "code_postal": "69001"
+        }
+      }, {
+        "numero_entreprise": "9321",
+        "nom_entreprise": "Tech Solutions bvhfvhg",
+        "activite": {
+          "group": "Technologie",
+          "naceCode": "5678"
+        },
+        "adresse": {
+          "rue": "10 avenue de la Technologie",
+          "ville": "Lyon",
+          "code_postal": "69001"
+        }
+      }, {
+        "numero_entreprise": "98543212",
+        "nom_entreprise": "Tech Sol",
+        "activite": {
+          "group": "Technologie",
+          "naceCode": "5678"
+        },
+        "adresse": {
+          "rue": "10 avenue de la Technologie",
+          "ville": "Lyon",
+          "code_postal": "69001"
+        }
+      }
+    ]
+  }
+  

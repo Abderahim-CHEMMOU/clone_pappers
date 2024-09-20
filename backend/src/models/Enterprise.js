@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+
 // Schéma pour les adresses
 const addressSchema = new mongoose.Schema({
   TypeOfAddress: { type: String },
@@ -42,11 +43,13 @@ const activitySchema = new mongoose.Schema({
 // Schéma principal pour les entreprises
 const enterpriseSchema = new mongoose.Schema({
   EnterpriseNumber: { type: String, unique: true, required: true },  // Numéro unique d'entreprise
+
   Status: { type: String },
   JuridicalSituation: { type: String },
   TypeOfEnterprise: { type: String },
   JuridicalForm: { type: String },
   JuridicalFormCAC: { type: String },
+
   StartDate: { type: Date },
   Activities: [activitySchema],      // Tableau pour les activités
   Addresses: [addressSchema],        // Tableau pour les adresses
@@ -61,5 +64,6 @@ enterpriseSchema.index({
 }, { unique: true });
 
 const Enterprise = mongoose.model('Enterprise', enterpriseSchema);
+
 
 export default Enterprise;
