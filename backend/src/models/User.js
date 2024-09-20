@@ -5,7 +5,12 @@ import bcrypt from 'bcrypt';
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Company' }],
+  preferences: {
+    theme: { type: String, default: 'light' },
+    language: { type: String, default: 'en' },
+  }
 }, { timestamps: true });
 
 userSchema.pre('save', async function (next) {

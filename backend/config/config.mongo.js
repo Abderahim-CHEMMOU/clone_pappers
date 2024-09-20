@@ -1,4 +1,4 @@
-// src/config.mongo.js
+// src/config/config.mongo.js
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
